@@ -1,6 +1,7 @@
 var currentDisplay = "";
 var currentResult = 0;
-var display = document.querySelector(".display");
+var divisor = 0;
+var display = document.querySelector(".display bdi");
 var op = "";
 
 var a = 0,
@@ -9,9 +10,19 @@ var firstInput = true;
 
 var updateDisplay = function (number) {
 
-    currentDisplay = currentDisplay + String(number);
-    if (typeof (number) === "number") {
+
+    if (typeof (number) === "number" && divisor == 0) {
         a = a * 10 + number;
+        currentDisplay = currentDisplay + String(number);
+
+    } else if (typeof (number) === "number" && divisor > 0) {
+
+        a = a + parseFloat(number / divisor);
+        divisor = divisor * 10;
+        currentDisplay = currentDisplay + String(number);
+
+    } else {
+        currentDisplay = currentDisplay.concat(String(number));
 
     }
     display.textContent = currentDisplay;
@@ -36,6 +47,7 @@ addition.onclick = function () {
     currentDisplay = "";
     b = a;
     a = 0;
+    divisor = 0;
     op = "add";
 
 
@@ -47,6 +59,7 @@ division.onclick = function () {
     currentDisplay = "";
     b = a;
     a = 0;
+    divisor = 0;
     op = "div";
 
 
@@ -58,6 +71,7 @@ product.onclick = function () {
     currentDisplay = "";
     b = a;
     a = 0;
+    divisor = 0;
     op = "mul";
 
 
@@ -68,6 +82,7 @@ subtract.onclick = function () {
     currentDisplay = "";
     b = a;
     a = 0;
+    divisor = 0;
     op = "sub";
 
 
@@ -78,7 +93,7 @@ var equal = document.querySelector(".row:nth-child(4) div:nth-child(3)");
 equal.onclick = function () {
     if (op === "add") {
 
-        display.textContent = a + b;
+        display.textContent = Math.round((parseFloat(a) + b + 0.000001) * 1000) / 1000;
     } else if (op === "div") {
 
         display.textContent = parseFloat(b) / a;
@@ -93,9 +108,18 @@ equal.onclick = function () {
     currentDisplay = "";
     a = 0;
     b = 0;
+    divisor = 0;
 
 
 }
+
+var decimal = document.querySelector(".row:nth-child(4) div:nth-child(1)");
+decimal.onclick = function () {
+    divisor = 10;
+    //divisor = Math.pow(10, a.toString().length - 1);
+    updateNumber(".");
+};
+
 
 var zero = document.querySelector(".row:nth-child(4) div:nth-child(2)");
 zero.onclick = function () {
