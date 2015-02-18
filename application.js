@@ -67,7 +67,7 @@ division.onclick = function () {
 
 var product = document.querySelector(".row:nth-child(2) div:nth-child(4)");
 product.onclick = function () {
-    display.textContent = "X";
+    display.textContent = "x";
     currentDisplay = "";
     b = a;
     a = 0;
